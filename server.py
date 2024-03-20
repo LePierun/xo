@@ -7,8 +7,7 @@ FORMAT = "utf-8"
 DISCONNECTMSG = "!Dissconnect"
 
 PORT = 8000
-# SERVER = socket.gethostbyname(socket.gethostname())
-SERVER = "192.168.1.7"
+SERVER = socket.gethostbyname(socket.gethostname())
 
 ADDR = (SERVER, PORT)
 
