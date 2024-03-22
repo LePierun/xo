@@ -25,8 +25,10 @@ def HandleClient(conn, addr):
 
             if msg == DISCONNECTMSG:
                 connected = False
+            else:
+                print(f"[{addr}] {msg}")
+                
     
-    print(f"[{addr}] {msg}")
     conn.close()
 
 def Start():
@@ -38,5 +40,7 @@ def Start():
         conn , addr = server.accept()
         thread = threading.Thread(target=HandleClient, args=(conn, addr))
         thread.start()
+
+
 print("[Startrd...]")
 Start()
