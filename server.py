@@ -50,24 +50,22 @@ def HandleClient(conn, addr):
     connections.append(Connection(conn))
     conid = connections.__len__()-1
     Send(conid,conn)
+
     while connected:
-        msgLength = conn.recv(HEADER).decode(FORMAT)
-        if msgLength:
-            lastMsg[f'{conn}:{addr}'] = msg
-            msgLength = int(msgLength)
-            msg = conn.recv(msgLength).decode(FORMAT)
+        msg = Recive(conn)
+        if msg == DISCONNECT_MSG:
+            connected = False
+
+        elif msg == sc.FILLED:
+            whitchpoteto = Recive(conn)
+            SendOther(whitchpoteto, conid)
+            NextTurn()
+            print(f'tura adrdesu: { activCon }')
+            print(f'{connections.__len__()}')
             
-
-            if msg == DISCONNECT_MSG:
-                connected = False
-
-            elif msg == sc.FILLED:
-                whitchpoteto = Recive(conn)
-                SendOther(whitchpoteto, conid)
-                NextTurn()
-                Send(sc.YOURTURN,connections[activCon].conn)
-            else:
-                print(f"[{addr}] {msg}")
+            Send(sc.YOURTURN,connections[activCon].conn)
+        else:
+            print(f"[{addr}] {msg}")
                 
     
     conn.close()
@@ -81,7 +79,7 @@ activCon = 0
 def NextTurn():
     global activCon
     activCon += 1
-    if activCon > connections.__len__():
+    if activCon > connections.__len__()-1:
         activCon = 0
 
 

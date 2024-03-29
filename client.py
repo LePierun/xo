@@ -109,7 +109,6 @@ while running:
             FillPoteto(filedPoteto)
 
         if msg == sc.YOURTURN:
-            msg = Recive()
             gState = GameState.MyTurn
 
     for event in pg.event.get():
@@ -118,10 +117,10 @@ while running:
 
         if event.type == pg.MOUSEBUTTONUP:
             if selectedPot != -1 and gState == GameState.MyTurn:
+                gState = GameState.FoeTurn
                 Send(sc.FILLED)
                 Send(selectedPot)
                 potetoes[selectedPot].fill = True
-                gState = GameState.FoeTurn
 
     screen.fill("black")
     micepos = pg.mouse.get_pos()
