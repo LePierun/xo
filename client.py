@@ -99,15 +99,46 @@ GenerateBoard(boardSize)
 
 
 while running:
+
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            running = False
+
+        if event.type == pg.MOUSEBUTTONUP:
+            if selectedPot != -1 and gState == GameState.MyTurn:
+                gState = GameState.FoeTurn
+                FillPoteto(selectedPot)
+                Send(sc.FILLED)
+                Send(selectedPot)
+                print("klikneitequrwa")
+                Send(sc.NEXT)
+
+
+
+    
+    screen.fill("black")
+    micepos = pg.mouse.get_pos()
+
+    smtn = pg.Rect(1,1 ,50, 50)
+    if gState == GameState.FoeTurn:
+        pg.draw.rect(screen, "red", smtn)
+    else:
+        pg.draw.rect(screen, "green", smtn)
+
+    Graphic()
+
+
     if gState == GameState.MyTurn:
         selectedPot = miceCol.collidelist(potetoesCol)
+        miceCol = pg.Rect(micepos,(1,1)) 
 
     elif gState == GameState.FoeTurn:
+
         MSG = Recive()
 
-        if MSG == sc.FILLED:
-            filedPoteto = Recive()
-            FillPoteto(filedPoteto)
+        # if MSG == sc.FILLED:
+        #     filedPoteto = Recive()
+        #     FillPoteto(filedPoteto)
 
         if MSG == sc.YOURTURN:
             
@@ -117,28 +148,6 @@ while running:
             if lastch != sc.NOTHING:
                 FillPoteto(lastch)
 
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            running = False
-
-        if event.type == pg.MOUSEBUTTONUP:
-            if selectedPot != -1 and gState == GameState.MyTurn:
-                gState = GameState.FoeTurn
-                Send(sc.FILLED)
-                Send(selectedPot)
-                FillPoteto(selectedPot)
-
-    screen.fill("black")
-    micepos = pg.mouse.get_pos()
-    miceCol = pg.Rect(micepos,(1,1)) 
-
-    smtn = pg.Rect(1,1 ,50, 50)
-    if gState == GameState.FoeTurn:
-        pg.draw.rect(screen, "red", smtn)
-    else:
-        pg.draw.rect(screen, "green", smtn)
-
-    Graphic()
     clock.tick(60) 
 
 pg.quit()

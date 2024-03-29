@@ -66,11 +66,15 @@ def HandleClient(conn, addr):
         elif msg == sc.GETLASTCHANG:
             Send(lastChang,conn)
 
+        elif msg == sc.NEXT:
+            NextTurn()
+            Send(sc.YOURTURN,connections[activCon].conn)
+
         elif msg == sc.FILLED:
             whitchpoteto = Recive(conn)
             lastChang = whitchpoteto
-            NextTurn()
-            Send(sc.YOURTURN,connections[activCon].conn)
+            
+            # Send(sc.YOURTURN,connections[activCon].conn)
 
         else:
             print(f"[{addr}] {msg}")

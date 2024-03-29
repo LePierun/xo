@@ -1,2 +1,1 @@
- # if not(lastch == None):
-           
+activCon
