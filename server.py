@@ -42,8 +42,9 @@ class Connection():
 
 
 firstPlayer = True
-lastChang = None
+lastChang = -1
 def HandleClient(conn, addr):
+    global lastChang
     print(f'[new conncetion] {addr} .')
     connected = True
     msg = " none "
@@ -61,12 +62,13 @@ def HandleClient(conn, addr):
 
         if msg == DISCONNECT_MSG:
             connected = False
+
         elif msg == sc.GETLASTCHANG:
             Send(lastChang,conn)
+
         elif msg == sc.FILLED:
             whitchpoteto = Recive(conn)
-            SendOther(sc.FILLED, conid)
-            SendOther(whitchpoteto, conid)
+            lastChang = whitchpoteto
             NextTurn()
             Send(sc.YOURTURN,connections[activCon].conn)
 

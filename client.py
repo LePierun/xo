@@ -97,6 +97,7 @@ selectedPot = -1
 #----generate board -------------------------------------------------------------------------------
 GenerateBoard(boardSize)
 
+
 while running:
     if gState == GameState.MyTurn:
         selectedPot = miceCol.collidelist(potetoesCol)
@@ -109,10 +110,12 @@ while running:
             FillPoteto(filedPoteto)
 
         if MSG == sc.YOURTURN:
+            
             gState = GameState.MyTurn
             Send(sc.GETLASTCHANG)
             lastch = Recive()
-            FillPoteto(lastch)
+            if lastch != sc.NOTHING:
+                FillPoteto(lastch)
 
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -128,6 +131,12 @@ while running:
     screen.fill("black")
     micepos = pg.mouse.get_pos()
     miceCol = pg.Rect(micepos,(1,1)) 
+
+    smtn = pg.Rect(1,1 ,50, 50)
+    if gState == GameState.FoeTurn:
+        pg.draw.rect(screen, "red", smtn)
+    else:
+        pg.draw.rect(screen, "green", smtn)
 
     Graphic()
     clock.tick(60) 

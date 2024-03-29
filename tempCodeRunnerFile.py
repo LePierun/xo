@@ -1,1 +1,2 @@
-FillPoteto
+ # if not(lastch == None):
+           

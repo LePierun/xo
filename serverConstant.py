@@ -8,5 +8,6 @@ FILLED = "filed"
 ENDTURN = "endturn"
 YOURTURN = "yourturn"
 GETLASTCHANG = "getlastchang"
+NOTHING ="-1"
 def Fillinfo(connid, slot):
     return f'{FILLED}:{slot}:{connid}'
