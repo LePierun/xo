@@ -7,6 +7,6 @@ DISCONNECT_MSG = "!Dissconnect"
 FILLED = "filed"
 ENDTURN = "endturn"
 YOURTURN = "yourturn"
-
+GETLASTCHANG = "getlastchang"
 def Fillinfo(connid, slot):
     return f'{FILLED}:{slot}:{connid}'

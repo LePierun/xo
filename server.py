@@ -39,10 +39,10 @@ class Connection():
     conn = None
     def __init__(self,conn) -> None:
         self.conn = conn
-    
+
 
 firstPlayer = True
-
+lastChang = None
 def HandleClient(conn, addr):
     print(f'[new conncetion] {addr} .')
     connected = True
@@ -50,23 +50,26 @@ def HandleClient(conn, addr):
     connections.append(Connection(conn))
     conid = connections.__len__()-1
     Send(conid,conn)
+
     global firstPlayer
     if firstPlayer:
-        Send(sc.YOURTURN,connections[activCon].conn)
+        Send(sc.YOURTURN,conn)
         firstPlayer = False
+
     while connected:
         msg = Recive(conn)
+
         if msg == DISCONNECT_MSG:
             connected = False
-
+        elif msg == sc.GETLASTCHANG:
+            Send(lastChang,conn)
         elif msg == sc.FILLED:
             whitchpoteto = Recive(conn)
+            SendOther(sc.FILLED, conid)
             SendOther(whitchpoteto, conid)
             NextTurn()
-            print(f'tura adrdesu: { activCon }')
-            print(f'{connections.__len__()}')
-            
             Send(sc.YOURTURN,connections[activCon].conn)
+
         else:
             print(f"[{addr}] {msg}")
                 

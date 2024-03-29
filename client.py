@@ -65,7 +65,7 @@ class Poteto():
         self.fill = False
 
     def Fill(self):
-        fill = True
+        self.fill = True
 
 def GenerateBoard(br):
     for i in range(br):
@@ -84,7 +84,7 @@ def Graphic():
     pg.display.flip()
 
 def FillPoteto(indx):
-    potetoes[indx].Fill()
+    potetoes[int(indx)].Fill()
 
 def Turn():
     pass
@@ -102,14 +102,17 @@ while running:
         selectedPot = miceCol.collidelist(potetoesCol)
 
     elif gState == GameState.FoeTurn:
-        msg = Recive()
+        MSG = Recive()
 
-        if msg == sc.FILLED:
+        if MSG == sc.FILLED:
             filedPoteto = Recive()
             FillPoteto(filedPoteto)
 
-        if msg == sc.YOURTURN:
+        if MSG == sc.YOURTURN:
             gState = GameState.MyTurn
+            Send(sc.GETLASTCHANG)
+            lastch = Recive()
+            FillPoteto(lastch)
 
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -120,18 +123,11 @@ while running:
                 gState = GameState.FoeTurn
                 Send(sc.FILLED)
                 Send(selectedPot)
-                potetoes[selectedPot].fill = True
+                FillPoteto(selectedPot)
 
     screen.fill("black")
     micepos = pg.mouse.get_pos()
     miceCol = pg.Rect(micepos,(1,1)) 
-
-
-
-
-
-
-
 
     Graphic()
     clock.tick(60) 
