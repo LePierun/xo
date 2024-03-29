@@ -41,7 +41,7 @@ class Connection():
         self.conn = conn
     
 
-
+firstPlayer = True
 
 def HandleClient(conn, addr):
     print(f'[new conncetion] {addr} .')
@@ -50,7 +50,10 @@ def HandleClient(conn, addr):
     connections.append(Connection(conn))
     conid = connections.__len__()-1
     Send(conid,conn)
-
+    global firstPlayer
+    if firstPlayer:
+        Send(sc.YOURTURN,connections[activCon].conn)
+        firstPlayer = False
     while connected:
         msg = Recive(conn)
         if msg == DISCONNECT_MSG:

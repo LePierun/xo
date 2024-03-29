@@ -45,7 +45,7 @@ CENTER = (screensize[0]/2,screensize[1]/2)
 clock = pg.time.Clock()
 running = True
 #--------------------------------------------------------Start
-gState = GameState.MyTurn 
+gState = GameState.FoeTurn 
 boardSize = 10
 potetoes = []
 potetoesCol = [] 
