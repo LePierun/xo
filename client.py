@@ -107,11 +107,9 @@ while running:
         if msg == sc.FILLED:
             filedPoteto = Recive()
             FillPoteto(filedPoteto)
-            print(msg)
 
         if msg == sc.YOURTURN:
             msg = Recive()
-            print(msg)
             gState = GameState.MyTurn
 
     for event in pg.event.get():
