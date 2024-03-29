@@ -60,14 +60,13 @@ def HandleClient(conn, addr):
 
             if msg == DISCONNECT_MSG:
                 connected = False
-            if msg == sc.FILLED:
+
+            elif msg == sc.FILLED:
                 whitchpoteto = Recive(conn)
                 SendOther(whitchpoteto, conid)
                 NextTurn()
                 Send(sc.YOURTURN,connections[activCon].conn)
-                pass
             else:
-
                 print(f"[{addr}] {msg}")
                 
     
