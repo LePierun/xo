@@ -11,7 +11,8 @@ ADDR = (SERVER, PORT)
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
 
-
+crosslinex = None
+crossliney = None
 
 def Send(msg,conn):
     msg = str(msg)
@@ -41,10 +42,14 @@ class Connection():
         self.conn = conn
 
 
+lastScore = 0
 firstPlayer = True
 lastChang = -1
 def HandleClient(conn, addr):
     global lastChang
+    global lastScore
+    global crosslinex
+    global crossliney
     print(f'[new conncetion] {addr} .')
     connected = True
     msg = " none "
@@ -65,6 +70,11 @@ def HandleClient(conn, addr):
 
         elif msg == sc.GETLASTCHANG:
             Send(lastChang,conn)
+            Send(lastScore,conn)
+            lastScore = 0
+            Send(crosslinex,conn)
+            Send(crossliney,conn)
+
 
         elif msg == sc.NEXT:
             NextTurn()
@@ -73,8 +83,11 @@ def HandleClient(conn, addr):
         elif msg == sc.FILLED:
             whitchpoteto = Recive(conn)
             lastChang = whitchpoteto
-            
-            # Send(sc.YOURTURN,connections[activCon].conn)
+        
+        elif msg == sc.SCORING:
+            lastScore = Recive(conn)
+            crosslinex = Recive(conn)
+            crossliney = Recive(conn)
 
         else:
             print(f"[{addr}] {msg}")
@@ -83,7 +96,7 @@ def HandleClient(conn, addr):
     conn.close()
 
 connections = []
-lastMsg = {} 
+lastMsg = {}
 
 
 

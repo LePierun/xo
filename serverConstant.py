@@ -10,5 +10,4 @@ YOURTURN = "yourturn"
 GETLASTCHANG = "getlastchang"
 NEXT = "next"
 NOTHING ="-1"
-def Fillinfo(connid, slot):
-    return f'{FILLED}:{slot}:{connid}'
+SCORING = "score"
